@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FlatList, Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import { Weather } from '../../types/Weather';
 
 type Props = {
@@ -27,11 +27,9 @@ const ForecastList: React.FC<Props> = ({ weather }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Next Forecast</Text>
-      <FlatList
-        data={forecast.forecastday.slice(1)}
-        keyExtractor={(item) => item.date}
-        renderItem={({ item }) => (
-          <View style={styles.containerInfo}>
+      <View>
+        {forecast.forecastday.slice(1).map((item, index) => (
+          <View style={styles.containerInfo} key={index}>
             <Text style={styles.text}>{`${getDay(item.date)}`}</Text>
             <Image
               style={styles.image}
@@ -42,19 +40,19 @@ const ForecastList: React.FC<Props> = ({ weather }) => {
               <Text style={styles.text}>{`${item.day.mintemp_c}°C`}</Text>
             </View>
           </View>
-        )}
-      />
+        ))}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    margin: 10,
     color: 'white',
     backgroundColor: '#0345fc',
-    borderRadius: 20,
-    padding: 5,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 10,
   },
   title: {
     fontSize: 22,
@@ -65,14 +63,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderTopWidth: 1,
     borderColor: 'gray',
-    borderWidth: 1,
-    paddingHorizontal: 8,
-    borderRadius: 15,
+    borderRadius: 10,
     margin: 5,
+    paddingLeft: 10,
+  },
+  'containerInfo:last-child': {
+    borderBottomWidth: 1,
   },
   containerForecast: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     flexDirection: 'row',
     gap: 10,
   },

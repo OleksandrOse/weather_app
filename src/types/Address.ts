@@ -12,4 +12,12 @@ export interface Address {
     state: string;
     suburb: string;
   };
+  boundingbox: [];
+  display_name: string;
+  lat: string;
+  licence: string;
+  lon: string;
+  osm_id: string;
+  osm_type: string;
+  place_id: string;
 }

@@ -1,9 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import addressReducer from '../features/address/address';
+import weatherReducer from '../features/weather/weather';
+import locationReducer from '../features/location/location';
 
 export const store = configureStore({
   reducer: {
+    location: locationReducer,
     address: addressReducer,
+    weather: weatherReducer,
   },
 });
 

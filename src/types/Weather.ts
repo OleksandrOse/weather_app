@@ -74,7 +74,11 @@ export interface Weather {
             chance_of_rain: number;
             chance_of_snow: number;
             cloud: number;
-            condition: [];
+            condition: {
+              code: number;
+              icon: string;
+              text: string;
+            };
             dewpoint_c: number;
             dewpoint_f: number;
             feelslike_c: number;

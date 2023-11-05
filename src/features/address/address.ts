@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Address } from '../../types/Address';
 
 type AddressState = {
-  address: Address | null;
+  address: string;
   loading: boolean;
   error: string;
 };
 
 const initialState: AddressState = {
-  address: null,
+  address: '',
   loading: false,
   error: '',
 };
@@ -20,11 +19,8 @@ const addressSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
-    set: (state, action: PayloadAction<Address>) => {
+    set: (state, action: PayloadAction<string>) => {
       state.address = action.payload;
-    },
-    remove: (state) => {
-      state.address = null;
     },
   },
 });
