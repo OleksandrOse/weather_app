@@ -11,12 +11,14 @@ export const weatherAsync = createAsyncThunk(
 
 type WeatherState = {
   weather: Weather | null;
+  isCelsium: boolean;
   loading: boolean;
   error: string;
 };
 
 const initialState: WeatherState = {
   weather: null,
+  isCelsium: true,
   loading: false,
   error: '',
 };
@@ -36,6 +38,9 @@ const weatherSlice = createSlice({
     },
     removeError: (state) => {
       state.error = '';
+    },
+    changeCelsium: (state, action: PayloadAction<boolean>) => {
+      state.isCelsium = action.payload;
     },
   },
   extraReducers: (builder) => {

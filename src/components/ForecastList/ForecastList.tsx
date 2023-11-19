@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Text, View, StyleSheet, Image } from 'react-native';
+import { useAppSelector } from '../../app/hooks';
 import { Weather } from '../../types/Weather';
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
 
 const ForecastList: React.FC<Props> = ({ weather }) => {
   const { forecast } = weather;
+  const isCelcium = useAppSelector((state) => state.weather.isCelsium);
 
   const getDay = (date: string) => {
     const daysNumber = new Date(date);
@@ -27,35 +29,49 @@ const ForecastList: React.FC<Props> = ({ weather }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Next Forecast</Text>
-      <View>
-        {forecast.forecastday.slice(1).map((item, index) => (
-          <View style={styles.containerInfo} key={index}>
+
+      {forecast.forecastday.slice(1).map((item, index) => (
+        <View style={styles.containerInfo} key={index}>
+          <View style={{ width: 80 }}>
             <Text style={styles.text}>{`${getDay(item.date)}`}</Text>
+          </View>
+
+          <View style={{ width: 80 }}>
             <Image
               style={styles.image}
               source={{ uri: `https:${item.day.condition.icon}` }}
             />
+          </View>
+
+          <View style={{ width: 80 }}>
             <View style={styles.containerForecast}>
-              <Text style={styles.text}>{`${item.day.maxtemp_c}°C`}</Text>
-              <Text style={styles.text}>{`${item.day.mintemp_c}°C`}</Text>
+              <Text style={styles.text}>
+                {isCelcium
+                  ? `${item.day.mintemp_c}°C`
+                  : `${item.day.mintemp_f}°F`}
+              </Text>
+              <Text style={styles.text}>
+                {isCelcium
+                  ? `${item.day.maxtemp_c}°C`
+                  : `${item.day.maxtemp_f}°F`}
+              </Text>
             </View>
           </View>
-        ))}
-      </View>
+        </View>
+      ))}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    color: 'white',
     backgroundColor: '#0345fc',
     borderRadius: 10,
     padding: 10,
-    marginBottom: 10,
+    opacity: 0.8,
   },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     color: '#fff',
   },
   containerInfo: {
@@ -65,18 +81,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderTopWidth: 1,
     borderColor: 'gray',
-    borderRadius: 10,
     margin: 5,
     paddingLeft: 10,
-  },
-  'containerInfo:last-child': {
-    borderBottomWidth: 1,
+    paddingRight: 10,
   },
   containerForecast: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     gap: 10,
   },
   text: {

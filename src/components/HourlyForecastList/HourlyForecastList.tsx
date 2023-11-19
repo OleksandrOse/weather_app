@@ -1,12 +1,6 @@
-import {
-  Text,
-  View,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Image,
-} from 'react-native';
+import { Text, View, StyleSheet, ScrollView, Image } from 'react-native';
 import React from 'react';
+import { useAppSelector } from '../../app/hooks';
 import { Weather } from '../../types/Weather';
 
 type Props = {
@@ -15,11 +9,12 @@ type Props = {
 
 const HourlyForecastList: React.FC<Props> = ({ weather }) => {
   const { forecast } = weather;
+  const isCelcium = useAppSelector((state) => state.weather.isCelsium);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <ScrollView
         horizontal
-        contentContainerStyle={{ paddingHorizontal: 10, gap: 10 }}
+        contentContainerStyle={styles.contentContainer}
         showsHorizontalScrollIndicator={false}
       >
         {forecast.forecastday[0].hour.map((item, index) => {
@@ -33,13 +28,13 @@ const HourlyForecastList: React.FC<Props> = ({ weather }) => {
                 source={{ uri: `https:${item.condition.icon}` }}
               />
               <Text style={styles.currentDescription}>
-                {`${item.feelslike_c}°`}
+                {isCelcium ? `${item.temp_c}°` : `${item.temp_f}°`}
               </Text>
             </View>
           );
         })}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -47,11 +42,17 @@ export default HourlyForecastList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 5,
+    //justifyContent: 'center',
+    //alignItems: 'center',
     backgroundColor: '#0345fc',
     borderRadius: 10,
     marginBottom: 10,
+    opacity: 0.8,
+  },
+  contentContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    gap: 20,
   },
   current: {
     alignItems: 'center',
@@ -61,8 +62,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: 40,
-    aspectRatio: '1/1',
-    borderRadius: 10,
+    resizeMode: 'contain',
   },
   currentDescription: {
     fontSize: 18,

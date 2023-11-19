@@ -1,54 +1,69 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { useAppSelector } from '../../app/hooks';
 import { Weather } from '../../types/Weather';
-import NounHumidity from '../../../assets/noun-humidity.svg';
-import NounRain from '../../../assets/noun-rain.svg';
-import NounWind from '../../../assets/noun-wind.svg';
+import NounHumidity from '../NounHumidity/NounHumidity';
+import NounRain from '../NounRain/NounRain';
+import NounWind from '../NounWind/NounWind';
 
 type Props = {
   weather: Weather;
 };
 
 const WeatherCard: React.FC<Props> = ({ weather }) => {
+  const isCelcium = useAppSelector((state) => state.weather.isCelsium);
+  const { forecast } = weather;
   return (
-    <View style={styles.card}>
-      <Image
-        style={styles.image}
-        source={{ uri: `https:${weather.current.condition.icon}` }}
-      />
-      <View style={styles.infoContainer}>
-        <Text style={styles.temperature}>{`${weather.current.temp_c}°C`}</Text>
-        <Text style={styles.description}>Precipitations:</Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            gap: 10,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Text
-            style={styles.description}
-          >{`Max.: ${weather.forecast.forecastday[0].day.maxtemp_c}°`}</Text>
-          <Text
-            style={styles.description}
-          >{`Min.: ${weather.forecast.forecastday[0].day.mintemp_c}°`}</Text>
+    <View>
+      <View style={styles.card}>
+        <View style={styles.infoContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: `https:${weather.current.condition.icon}` }}
+          />
+          <Text style={styles.temperature}>
+            {isCelcium
+              ? `${weather.current.temp_c}°C`
+              : `${weather.current.temp_f}°F`}
+          </Text>
+          <Text style={styles.description}>Precipitations:</Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Text style={styles.description}>
+              {isCelcium
+                ? `Max.: ${forecast.forecastday[0].day.maxtemp_c}°`
+                : `Max.: ${forecast.forecastday[0].day.maxtemp_f}°`}
+            </Text>
+            <Text style={styles.description}>
+              {isCelcium
+                ? `Min.: ${weather.forecast.forecastday[0].day.mintemp_c}°`
+                : `Min.: ${weather.forecast.forecastday[0].day.mintemp_c}°`}
+            </Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.containerDescription}>
-        <View style={styles.content}>
-          <NounRain />
-          <Text style={styles.text}>{`${weather.current.precip_in}%`}</Text>
-        </View>
+        <View style={styles.containerDescription}>
+          <View style={styles.content}>
+            <NounRain />
+            <Text style={styles.text}>{`${weather.current.precip_in}%`}</Text>
+          </View>
 
-        <View style={styles.content}>
-          <NounHumidity />
-          <Text style={styles.text}>{`${weather.current.humidity}%`}</Text>
-        </View>
+          <View style={styles.content}>
+            <NounHumidity />
+            <Text style={styles.text}>{`${weather.current.humidity}%`}</Text>
+          </View>
 
-        <View style={styles.content}>
-          <NounWind />
-          <Text style={styles.text}>{`${weather.current.wind_kph} km/h`}</Text>
+          <View style={styles.content}>
+            <NounWind />
+            <Text
+              style={styles.text}
+            >{`${weather.current.wind_kph} km/h`}</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -73,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: '#0345fc',
     borderRadius: 10,
-    opacity: 30,
+    opacity: 0.8,
     padding: 10,
   },
   content: {
