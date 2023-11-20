@@ -10,6 +10,11 @@ type Props = {
 const HourlyForecastList: React.FC<Props> = ({ weather }) => {
   const { forecast } = weather;
   const isCelcium = useAppSelector((state) => state.weather.isCelsium);
+  const timeNow = new Date().getHours();
+  const hourlyWeather = [
+    ...forecast.forecastday[0].hour.slice(timeNow),
+    ...forecast.forecastday[0].hour.slice(0, timeNow),
+  ];
   return (
     <View style={styles.container}>
       <ScrollView
@@ -17,12 +22,14 @@ const HourlyForecastList: React.FC<Props> = ({ weather }) => {
         contentContainerStyle={styles.contentContainer}
         showsHorizontalScrollIndicator={false}
       >
-        {forecast.forecastday[0].hour.map((item, index) => {
+        {hourlyWeather.map((item, index) => {
           const hour = item.time.split(' ')[1].split(':')[0];
 
           return (
             <View key={index} style={styles.current}>
-              <Text style={styles.currentDescription}>{hour}</Text>
+              <Text style={styles.currentDescription}>
+                {index === 0 ? 'Now' : `${hour}`}
+              </Text>
               <Image
                 style={styles.image}
                 source={{ uri: `https:${item.condition.icon}` }}
@@ -42,14 +49,14 @@ export default HourlyForecastList;
 
 const styles = StyleSheet.create({
   container: {
-    //justifyContent: 'center',
-    //alignItems: 'center',
     backgroundColor: '#0345fc',
     borderRadius: 10,
     marginBottom: 10,
     opacity: 0.8,
   },
   contentContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
     paddingHorizontal: 10,
     paddingVertical: 10,
     gap: 20,

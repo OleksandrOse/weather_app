@@ -32,18 +32,18 @@ const ForecastList: React.FC<Props> = ({ weather }) => {
 
       {forecast.forecastday.slice(1).map((item, index) => (
         <View style={styles.containerInfo} key={index}>
-          <View style={{ width: 80 }}>
+          <View style={{ width: 90 }}>
             <Text style={styles.text}>{`${getDay(item.date)}`}</Text>
           </View>
 
-          <View style={{ width: 80 }}>
+          <View style={{ width: 90 }}>
             <Image
               style={styles.image}
               source={{ uri: `https:${item.day.condition.icon}` }}
             />
           </View>
 
-          <View style={{ width: 80 }}>
+          <View style={{ width: 90 }}>
             <View style={styles.containerForecast}>
               <Text style={styles.text}>
                 {isCelcium

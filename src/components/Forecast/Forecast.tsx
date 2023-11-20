@@ -61,7 +61,7 @@ const Forecast = () => {
 
   if (!weather?.current || errorWeather) {
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.activityContainer}>
         <ActivityIndicator size="large" />
       </SafeAreaView>
     );
@@ -143,15 +143,9 @@ const Forecast = () => {
           <View style={styles.containerContent}>
             <LocationInfo address={address} loadForecast={loadForecast} />
 
-            {weather ? (
-              <>
-                <WeatherCard weather={weather} />
-                <HourlyForecastList weather={weather} />
-                <ForecastList weather={weather} />
-              </>
-            ) : (
-              <ActivityIndicator size="large" />
-            )}
+            <WeatherCard weather={weather} />
+            <HourlyForecastList weather={weather} />
+            <ForecastList weather={weather} />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -167,13 +161,14 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
     height: 'auto',
   },
+  activityContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   containerContent: {
     flex: 1,
     margin: 10,
-  },
-  refresh: {
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   largeIcon: {
     width: 300,
