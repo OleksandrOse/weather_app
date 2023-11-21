@@ -13,7 +13,7 @@ const HourlyForecastList: React.FC<Props> = ({ weather }) => {
   const timeNow = new Date().getHours();
   const hourlyWeather = [
     ...forecast.forecastday[0].hour.slice(timeNow),
-    ...forecast.forecastday[0].hour.slice(0, timeNow),
+    ...forecast.forecastday[0].hour.slice(0, timeNow + 1),
   ];
   return (
     <View style={styles.container}>

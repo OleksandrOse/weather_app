@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   },
   location: {
     padding: 5,
+    color: '#fff',
   },
   info: {
     flexDirection: 'row',

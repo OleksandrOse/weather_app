@@ -11,7 +11,7 @@
     "lint": "eslint --ext .tsx --ext .ts src/",
     "format": "prettier --check ./src",
     "deploy": "gh-pages -d web-build",
-    "predeploy": "expo export:web"
+    "predeploy": "expo export"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
