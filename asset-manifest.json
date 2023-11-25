@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/weather_app/static/js/main.fcbfa1e1.js",
-    "static/js/191.e0566b66.js": "/weather_app/static/js/191.e0566b66.js",
+    "main.js": "/weather_app/static/js/main.03f2627c.js",
+    "static/js/819.d1bec399.js": "/weather_app/static/js/819.d1bec399.js",
     "static/media/cloudy.gif": "/weather_app/static/media/cloudy.8181a86e7cec2fddf8d9.gif",
     "static/media/snow.gif": "/weather_app/static/media/snow.75482c43dd8d264a5d0c.gif",
     "static/media/patchy-rain-possible.gif": "/weather_app/static/media/patchy-rain-possible.e27b9d4992e9c7cce2bf.gif",
@@ -10,17 +10,18 @@
     "static/media/rain.gif": "/weather_app/static/media/rain.6803f95cb7e6bb78bc00.gif",
     "static/media/snowy-night.gif": "/weather_app/static/media/snowy-night.0cb8552a87994ff15739.gif",
     "favicon.ico": "/weather_app/favicon.ico",
+    "static/media/EvilIcons.ttf": "/weather_app/static/media/EvilIcons.699664b33ac2837d5bee.ttf",
     "index.html": "/weather_app/index.html",
     "static/media/night.gif": "/weather_app/static/media/night.017d94c2aeca2717c191.gif",
     "favicon-32.png": "/weather_app/favicon-32.png",
     "manifest.json": "/weather_app/manifest.json",
     "favicon-16.png": "/weather_app/favicon-16.png",
     "serve.json": "/weather_app/serve.json",
-    "main.fcbfa1e1.js.map": "/weather_app/static/js/main.fcbfa1e1.js.map",
-    "191.e0566b66.js.map": "/weather_app/static/js/191.e0566b66.js.map"
+    "main.03f2627c.js.map": "/weather_app/static/js/main.03f2627c.js.map",
+    "819.d1bec399.js.map": "/weather_app/static/js/819.d1bec399.js.map"
   },
   "entrypoints": [
-    "static/js/191.e0566b66.js",
-    "static/js/main.fcbfa1e1.js"
+    "static/js/819.d1bec399.js",
+    "static/js/main.03f2627c.js"
   ]
 }
