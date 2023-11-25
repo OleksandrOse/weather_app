@@ -1,12 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import addressReducer from '../features/address/address';
 import weatherReducer from '../features/weather/weather';
 
 export const store = configureStore({
   reducer: {
-    address: addressReducer,
     weather: weatherReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: false,
+      serializableCheck: false,
+    }),
 });
 
 export type AppDispatch = typeof store.dispatch;

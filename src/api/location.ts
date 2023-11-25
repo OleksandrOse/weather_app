@@ -4,7 +4,7 @@ import {
   requestForegroundPermissionsAsync,
   getCurrentPositionAsync,
 } from 'expo-location';
-import { Alert } from 'react-native';
+
 import { Location } from '../types/Location';
 
 export const getLocation = async () => {
@@ -15,12 +15,12 @@ export const getLocation = async () => {
       const location = await getCurrentPositionAsync({
         accuracy: LocationAccuracy.Balanced,
       });
-
-      return location.coords as Location;
+      return {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      } as Location;
     } else {
       console.error('Permission to access location was denied.');
-      Alert.alert('Permision to access location was denied');
-
       return {
         latitude: 50.4501,
         longitude: 30.5234,
@@ -28,6 +28,9 @@ export const getLocation = async () => {
     }
   } catch (error) {
     console.error('Error getting location:', error);
-    return null;
+    return {
+      latitude: 50.4501,
+      longitude: 30.5234,
+    } as Location;
   }
 };

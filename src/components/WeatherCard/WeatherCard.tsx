@@ -43,7 +43,7 @@ const WeatherCard: React.FC<Props> = ({ weather }) => {
             <Text style={styles.description}>
               {isCelcium
                 ? `Min.: ${weather.forecast.forecastday[0].day.mintemp_c}°`
-                : `Min.: ${weather.forecast.forecastday[0].day.mintemp_c}°`}
+                : `Min.: ${weather.forecast.forecastday[0].day.mintemp_f}°`}
             </Text>
           </View>
         </View>

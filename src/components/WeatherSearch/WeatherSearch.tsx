@@ -3,7 +3,6 @@ import { useDebounce } from 'use-debounce';
 import React, { useState, useEffect } from 'react';
 import { EvilIcons } from '@expo/vector-icons';
 import { useAppDispatch } from '../../app/hooks';
-import { actions as addressActions } from '../../features/address/address';
 import { actions as weatherActions } from '../../features/weather/weather';
 import { getWeather } from '../../api/weather';
 
@@ -18,7 +17,7 @@ const WeatherSearch: React.FC = () => {
 
       if (weather.current) {
         dispatch(weatherActions.set(weather));
-        dispatch(addressActions.set(weather.location.name));
+        dispatch(weatherActions.setCity(weather.location.name));
       } else {
         Alert.alert('Error', 'There is no such city');
       }

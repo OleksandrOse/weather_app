@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-function wait(delay: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, delay);
-  });
-}
+// function wait(delay: number) {
+//   return new Promise((resolve) => {
+//     setTimeout(resolve, delay);
+//   });
+// }
 
 type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
@@ -23,9 +23,7 @@ function request<T>(
     };
   }
 
-  return wait(300)
-    .then(() => fetch(url, options))
-    .then((response) => response.json());
+  return fetch(url, options).then((response) => response.json());
 }
 
 export const client = {

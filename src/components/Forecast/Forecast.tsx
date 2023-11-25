@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import {
-  Alert,
   SafeAreaView,
   StyleSheet,
   ActivityIndicator,
@@ -15,51 +12,43 @@ import Constants from 'expo-constants';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
-import { getAddress } from '../../api/address';
 import { getLocation } from '../../api/location';
+import { getAddress } from '../../api/address';
+import { getWeatherLocation } from '../../api/weather';
 
 import LocationInfo from '../LocationInfo/LocationInfo';
 import WeatherCard from '../WeatherCard/WeatherCard';
 import ForecastList from '../ForecastList/ForecastList';
 import HourlyForecastList from '../HourlyForecastList/HourlyForecastList';
-
-import { Location } from '../../types/Location';
-
-import { weatherAsync } from '../../features/weather/weather';
-import { actions as addressActions } from '../../features/address/address';
+import { actions as weatherActions } from '../../features/weather/weather';
+import { getBackground } from '../../utils/getBackground';
 
 const Forecast = () => {
   const dispatch = useAppDispatch();
 
   const weather = useAppSelector((state) => state.weather.weather);
-  const errorWeather = useAppSelector((state) => state.weather.error);
-  const address = useAppSelector((state) => state.address.address);
+  const address = useAppSelector((state) => state.weather.city);
   const [refreshing, setRefreshing] = useState(false);
 
-  const loadForecast = async () => {
+  const loadForecast = () => {
     setRefreshing(true);
 
-    try {
-      const location = (await getLocation()) as Location;
+    void getLocation().then(async (resLocation) => {
+      const forecast = await getWeatherLocation(resLocation);
+      const city = await getAddress(resLocation);
 
-      const city = await getAddress(location);
-      dispatch(addressActions.set(city));
+      dispatch(weatherActions.setCity(city));
+      dispatch(weatherActions.set(forecast));
+    });
 
-      void dispatch(weatherAsync({ city }));
-    } catch {
-      Alert.alert('Error', 'Something went wrong');
-    } finally {
-      setRefreshing(false);
-    }
+    setRefreshing(false);
   };
 
   useEffect(() => {
-    void (async () => {
-      await loadForecast();
-    })();
+    loadForecast();
   }, []);
 
-  if (!weather?.current || errorWeather) {
+  if (!weather?.current) {
     return (
       <SafeAreaView style={styles.activityContainer}>
         <ActivityIndicator size="large" />
@@ -67,60 +56,9 @@ const Forecast = () => {
     );
   }
 
-  function getBackground(isDay: number, text: string) {
-    if (
-      text === 'Patchy rain possible' ||
-      text === 'Light rain' ||
-      text === 'Light drizzle'
-    ) {
-      return require('../../../assets/patchy-rain-possible.gif');
-    } else if (text === ('Light rain' || 'Light rain shower' || 'Rain')) {
-      return require('../../../assets/rain.gif');
-    }
-
-    if (isDay) {
-      if (
-        text === 'Partly cloudy' ||
-        text === 'Overcast' ||
-        text === 'Cloudy'
-      ) {
-        return require('../../../assets/cloudy.gif');
-      } else if (
-        text === 'Patchy snow possible' ||
-        text === 'Patchy sleet possible' ||
-        text === 'Blowing snow' ||
-        text === 'Patchy moderate snow' ||
-        text === 'Patchy heavy snow' ||
-        text === 'Heavy snow'
-      ) {
-        return require('../../../assets/snow.gif');
-      }
-
-      return require('../../../assets/sunny.gif');
-    } else {
-      if (
-        text === 'Partly cloudy' ||
-        text === 'Overcast' ||
-        text === 'Cloudy'
-      ) {
-        return require('../../../assets/partly-cloudy.gif');
-      } else if (
-        text === 'Patchy snow possible' ||
-        text === 'Patchy sleet possible' ||
-        text === 'Blowing snow' ||
-        text === 'Patchy moderate snow' ||
-        text === 'Patchy heavy snow' ||
-        text === 'Heavy snow'
-      ) {
-        return require('../../../assets/snowy-night.gif');
-      }
-
-      return require('../../../assets/night.gif');
-    }
-  }
-
   return (
     <ImageBackground
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       source={getBackground(
         weather.current.is_day,
         weather.current.condition.text
@@ -132,11 +70,7 @@ const Forecast = () => {
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
-              onRefresh={
-                void (async () => {
-                  await loadForecast();
-                })
-              }
+              onRefresh={() => loadForecast()}
             />
           }
         >
@@ -165,6 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'lightBlue',
   },
   containerContent: {
     flex: 1,

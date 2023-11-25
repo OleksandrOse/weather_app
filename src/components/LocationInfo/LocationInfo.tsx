@@ -7,18 +7,17 @@ import SettingsWeather from '../SettingsWeather/SettingsWeather';
 
 type Props = {
   address: string;
-  loadForecast: () => Promise<void>;
+  loadForecast: () => void;
 };
 
 const LocationInfo: React.FC<Props> = ({ address, loadForecast }) => {
-  const handlePress = async () => {
-    await loadForecast();
+  const handlePress = () => {
+    loadForecast();
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.info}>
-        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
         <Pressable onPress={() => handlePress()}>
           <LocationSvg style={styles.location} />
         </Pressable>

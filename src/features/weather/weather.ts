@@ -1,16 +1,9 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Weather } from '../../types/Weather';
-import { getWeather } from '../../api/weather';
-
-export const weatherAsync = createAsyncThunk(
-  'weather/get',
-  (params: { city: string }) => {
-    return getWeather(params.city);
-  }
-);
 
 type WeatherState = {
   weather: Weather | null;
+  city: string;
   isCelsium: boolean;
   loading: boolean;
   error: string;
@@ -18,6 +11,7 @@ type WeatherState = {
 
 const initialState: WeatherState = {
   weather: null,
+  city: '',
   isCelsium: true,
   loading: false,
   error: '',
@@ -33,6 +27,9 @@ const weatherSlice = createSlice({
     set: (state, action: PayloadAction<Weather>) => {
       state.weather = action.payload;
     },
+    setCity: (state, action: PayloadAction<string>) => {
+      state.city = action.payload;
+    },
     remove: (state) => {
       state.weather = null;
     },
@@ -42,22 +39,6 @@ const weatherSlice = createSlice({
     changeCelsium: (state, action: PayloadAction<boolean>) => {
       state.isCelsium = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(weatherAsync.pending, (state) => {
-      state.loading = true;
-    });
-
-    builder.addCase(weatherAsync.fulfilled, (state, action) => {
-      state.weather = action.payload;
-      state.loading = false;
-    });
-
-    builder.addCase(weatherAsync.rejected, (state) => {
-      state.loading = false;
-      state.weather = null;
-      state.error = 'Something went wrong';
-    });
   },
 });
 
