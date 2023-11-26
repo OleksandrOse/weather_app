@@ -2,6 +2,7 @@ import { Text, View, StyleSheet, ScrollView, Image } from 'react-native';
 import React from 'react';
 import { useAppSelector } from '../../app/hooks';
 import { Weather } from '../../types/Weather';
+import { Hour } from '../../types/Hour';
 
 type Props = {
   weather: Pick<Weather, 'forecast'>;
@@ -9,12 +10,17 @@ type Props = {
 
 const HourlyForecastList: React.FC<Props> = ({ weather }) => {
   const { forecast } = weather;
+  const { forecastday } = forecast;
   const isCelcium = useAppSelector((state) => state.weather.isCelsium);
   const timeNow = new Date().getHours();
+
   const hourlyWeather = [
-    ...forecast.forecastday[0].hour.slice(timeNow),
-    ...forecast.forecastday[0].hour.slice(0, timeNow + 1),
-  ];
+    ...forecastday[0].hour.slice(timeNow),
+    ...forecastday[1].hour.slice(0, timeNow + 1),
+  ] as Hour[];
+  console.log(hourlyWeather);
+
+  
   return (
     <View style={styles.container}>
       <ScrollView

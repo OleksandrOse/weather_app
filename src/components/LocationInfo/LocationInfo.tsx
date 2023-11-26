@@ -19,7 +19,7 @@ const LocationInfo: React.FC<Props> = ({ address, loadForecast }) => {
     <View style={styles.container}>
       <View style={styles.info}>
         <Pressable onPress={() => handlePress()}>
-          <LocationSvg style={styles.location} />
+          <LocationSvg />
         </Pressable>
         <Text style={styles.city}>{address}</Text>
       </View>
@@ -38,10 +38,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingTop: 10,
     marginBottom: 10,
-  },
-  location: {
-    padding: 5,
-    color: '#fff',
   },
   info: {
     flexDirection: 'row',

@@ -2,6 +2,7 @@
   "expo": {
     "name": "Weather_App",
     "slug": "Weather_App",
+    "runtimeVersion": "1.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -32,9 +33,6 @@
       "eas": {
         "projectId": "4ee3ae7b-d31b-437a-8dc1-334ddf05724f"
       }
-    },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
     },
     "updates": {
       "url": "https://u.expo.dev/4ee3ae7b-d31b-437a-8dc1-334ddf05724f"
