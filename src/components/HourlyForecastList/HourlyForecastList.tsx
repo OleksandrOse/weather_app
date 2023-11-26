@@ -18,9 +18,7 @@ const HourlyForecastList: React.FC<Props> = ({ weather }) => {
     ...forecastday[0].hour.slice(timeNow),
     ...forecastday[1].hour.slice(0, timeNow + 1),
   ] as Hour[];
-  console.log(hourlyWeather);
 
-  
   return (
     <View style={styles.container}>
       <ScrollView
