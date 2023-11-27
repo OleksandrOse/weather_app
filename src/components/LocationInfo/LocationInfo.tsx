@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   city: {
+    width: 120,
     fontSize: 17,
     fontWeight: 'bold',
     color: '#fff',

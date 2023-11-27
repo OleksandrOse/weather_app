@@ -1,4 +1,4 @@
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet, Alert } from 'react-native';
 import { useDebounce } from 'use-debounce';
 import React, { useState, useEffect } from 'react';
 import { EvilIcons } from '@expo/vector-icons';
@@ -21,6 +21,7 @@ const WeatherSearch: React.FC = () => {
         dispatch(weatherActions.setCity(weather.location.name));
       } else {
         alert('There is no such city. Please try again');
+        Alert.alert('Warn', 'There is no such city. Please try again');
       }
     } catch {
       alert('Something went wrong');
