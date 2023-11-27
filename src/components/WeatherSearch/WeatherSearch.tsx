@@ -1,4 +1,4 @@
-import { View, TextInput, StyleSheet, Dimensions, Alert } from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import { useDebounce } from 'use-debounce';
 import React, { useState, useEffect } from 'react';
 import { EvilIcons } from '@expo/vector-icons';
@@ -19,10 +19,10 @@ const WeatherSearch: React.FC = () => {
         dispatch(weatherActions.set(weather));
         dispatch(weatherActions.setCity(weather.location.name));
       } else {
-        Alert.alert('Error', 'There is no such city');
+        alert('There is no such city. Please try again');
       }
     } catch {
-      Alert.alert('Error', 'Something went wrong');
+      alert('Something went wrong');
     } finally {
       setCity('');
     }
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: Dimensions.get('screen').width / 2.2,
+    width: 150,
     borderWidth: 1,
     borderColor: 'lightgray',
     borderRadius: 15,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
   },
   searchInput: {
-    width: Dimensions.get('screen').width / 3,
+    width: 100,
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderWidth: 0,
