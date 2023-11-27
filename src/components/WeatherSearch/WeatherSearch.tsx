@@ -14,6 +14,7 @@ const WeatherSearch: React.FC = () => {
   async function searchWeather() {
     try {
       const weather = await getWeather(debouncedValue);
+      console.log(weather.current);
 
       if (weather.current) {
         dispatch(weatherActions.set(weather));
